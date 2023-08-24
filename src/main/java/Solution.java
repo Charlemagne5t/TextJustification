@@ -18,14 +18,14 @@ public class Solution {
 
             }
             if (i == words.length){
-                String lastLine = temp.get(0);
+                StringBuilder lastLine = new StringBuilder(temp.get(0));
                 for (int j = 1; j < temp.size(); j++) {
-                    lastLine = lastLine + " " + temp.get(j);
+                    lastLine.append(" ").append(temp.get(j));
                 }
                 while (lastLine.length() != maxWidth){
-                    lastLine = lastLine + " ";
+                    lastLine.append(" ");
                 }
-                result.add(lastLine);
+                result.add(lastLine.toString());
                 return result;
             }
             if (temp.size() == 1) {
@@ -46,38 +46,36 @@ public class Solution {
                 for (int j = right.length() - 1, k = line.length - 1; j >= 0; j--, k--) {
                     line[k] = right.charAt(j);
                 }
-                if (true) {
-                    int numberOfNecessarySpaceSlots = temp.size() - 2 + 1;
-                    int min = spaces / numberOfNecessarySpaceSlots;
-                    int[] spacesAfterWords = new int[numberOfNecessarySpaceSlots];
-                    Arrays.fill(spacesAfterWords, min);
-                    int leftOverSpaces = spaces % numberOfNecessarySpaceSlots;
-                    for (int j = 0; leftOverSpaces > 0; j++, leftOverSpaces--) {
-                        spacesAfterWords[j]++;
-                    }
-                    int s = 0;
-                    int t = 1;
-                    for (int j = temp.get(0).length(); j < line.length - temp.get(temp.size() - 1).length(); ) {
-                        while (spacesAfterWords[s] != 0) {
-                            line[j] = ' ';
-                            j++;
-                            spacesAfterWords[s]--;
-                        }
-                        s++;
-                        if (t == temp.size() - 1) {
-                            break;
-                        }
-
-                        for (int k = 0; k < temp.get(t).length(); k++) {
-                            line[j] = temp.get(t).charAt(k);
-                            j++;
-                        }
-                        t++;
-
-
-                    }
-                    result.add(new String(line));
+                int numberOfNecessarySpaceSlots = temp.size() - 2 + 1;
+                int min = spaces / numberOfNecessarySpaceSlots;
+                int[] spacesAfterWords = new int[numberOfNecessarySpaceSlots];
+                Arrays.fill(spacesAfterWords, min);
+                int leftOverSpaces = spaces % numberOfNecessarySpaceSlots;
+                for (int j = 0; leftOverSpaces > 0; j++, leftOverSpaces--) {
+                    spacesAfterWords[j]++;
                 }
+                int s = 0;
+                int t = 1;
+                for (int j = temp.get(0).length(); j < line.length - temp.get(temp.size() - 1).length(); ) {
+                    while (spacesAfterWords[s] != 0) {
+                        line[j] = ' ';
+                        j++;
+                        spacesAfterWords[s]--;
+                    }
+                    s++;
+                    if (t == temp.size() - 1) {
+                        break;
+                    }
+
+                    for (int k = 0; k < temp.get(t).length(); k++) {
+                        line[j] = temp.get(t).charAt(k);
+                        j++;
+                    }
+                    t++;
+
+
+                }
+                result.add(new String(line));
 
             }
         }
